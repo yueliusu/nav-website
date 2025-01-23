@@ -70,4 +70,45 @@ document.addEventListener('click', (e) => {
     if (!followBtn.contains(e.target)) {
         qrPopup.classList.remove('show');
     }
+});
+
+// 监听滚动事件
+window.addEventListener('scroll', () => {
+    const footer = document.querySelector('footer');
+    const scrollPosition = window.innerHeight + window.scrollY;
+    const documentHeight = document.documentElement.scrollHeight;
+    
+    // 当滚动到页面底部附近时显示 footer
+    if (scrollPosition >= documentHeight - 100) {
+        footer.classList.remove('hidden');
+        footer.classList.add('visible');
+    } else {
+        footer.classList.remove('visible');
+        footer.classList.add('hidden');
+    }
+});
+
+// 分类功能
+document.addEventListener('DOMContentLoaded', () => {
+    const categoryBtns = document.querySelectorAll('.category-btn');
+    const navItems = document.querySelectorAll('.nav-item');
+    
+    categoryBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            // 更新按钮状态
+            categoryBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            
+            const category = btn.dataset.category;
+            
+            // 筛选显示对应分类的网站
+            navItems.forEach(item => {
+                if (category === 'all' || item.dataset.category === category) {
+                    item.style.display = 'flex';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
+    });
 }); 
